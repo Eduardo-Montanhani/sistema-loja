@@ -41,7 +41,9 @@
             </button>
 
         </form>
-
+        <a href="/register" class="block hover:text-blue-400">
+                    Registrar
+        </a>
     </div>
 
 </body>
