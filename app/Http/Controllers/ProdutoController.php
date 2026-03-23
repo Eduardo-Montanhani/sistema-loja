@@ -90,11 +90,36 @@ class ProdutoController extends Controller
     /**
      * Deletar produto
      */
-    public function destroy(Produto $produto)
+    public function destroy(Request $request, $id)
     {
+        if ($request->master_password !== env('MASTER_PASSWORD')) {
+            return redirect()->back()->with('error', 'Senha mestre incorreta!');
+        }
+
+        $produto = Produto::findOrFail($id);
         $produto->delete();
 
-        return redirect()->route('produtos.index')
-            ->with('success', 'Produto removido com sucesso!');
+        return redirect()->back()->with('success', 'Produto excluído!');
+    }
+
+    public function vender($id)
+    {
+        $produto = Produto::findOrFail($id);
+
+        if ($produto->quantidade > 0) {
+
+            $produto->quantidade -= 1;
+
+            // só marca como vendido se zerar o estoque (opcional)
+            if ($produto->quantidade == 0) {
+                $produto->vendido = true;
+            }
+
+            $produto->save();
+
+            return redirect()->back()->with('success', 'Produto vendido!');
+        }
+
+        return redirect()->back()->with('error', 'Sem estoque!');
     }
 }

@@ -10,6 +10,7 @@ class Produto extends Model
         'nome',
         'preco_compra',
         'preco_venda',
-        'quantidade'
+        'quantidade',
+        'vendido'
     ];
 }

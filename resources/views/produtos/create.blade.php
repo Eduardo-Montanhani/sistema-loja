@@ -15,8 +15,8 @@
 
         <div class="w-64 bg-gray-900 text-white p-6">
 
-            <h2 class="text-2xl font-bold mb-8">
-                Sistema Loja
+            <h2 class="text-2xl font-bold mb-2">
+                <img src="{{ asset('images/logo.png') }}" class="w-50 mx-auto mb-2">
             </h2>
 
             <nav class="space-y-4">

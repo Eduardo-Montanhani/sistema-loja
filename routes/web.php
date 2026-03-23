@@ -31,4 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('produtos', ProdutoController::class);
 
     Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
+
+    Route::patch('/produtos/{id}/vender', [ProdutoController::class, 'vender'])
+        ->name('produtos.vender');
 });
