@@ -8,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -34,6 +36,14 @@
             <a href="/relatorios" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
                 <span class="text-lg">📈</span>
                 <span class="font-medium">Relatórios</span>
+            </a>
+
+            <a href="/despesas" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                <span>💸</span> <span class="font-medium">Despesas</span>
+            </a>
+
+            <a href="/fechamento" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                📄 Fechamento Mensal
             </a>
         </nav>
 
@@ -64,6 +74,35 @@
         </header>
 
         <div class="p-8 max-w-7xl mx-auto w-full space-y-10">
+            <div class="grid grid-cols-3 gap-6 mb-8">
+
+                <!-- LUCRO VENDAS -->
+                <div class="bg-white p-5 rounded shadow">
+                    <p class="text-gray-500">Lucro com Vendas</p>
+                    <p class="text-2xl font-bold text-green-600">
+                        R$ {{ number_format($lucroTotal,2,',','.') }}
+                    </p>
+                </div>
+
+                <!-- DESPESAS -->
+                <div class="bg-white p-5 rounded shadow">
+                    <p class="text-gray-500">Despesas</p>
+                    <p class="text-2xl font-bold text-red-500">
+                        R$ {{ number_format($totalDespesas,2,',','.') }}
+                    </p>
+                </div>
+
+                <!-- LUCRO REAL -->
+                <div class="bg-white p-5 rounded shadow">
+                    <p class="text-gray-500">Lucro Real</p>
+                    <p class="text-2xl font-bold
+            {{ $lucroReal >= 0 ? 'text-blue-600' : 'text-red-600' }}">
+
+                        R$ {{ number_format($lucroReal,2,',','.') }}
+                    </p>
+                </div>
+
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 

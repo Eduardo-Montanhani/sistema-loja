@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DespesaController;
+use App\Http\Controllers\FechamentoController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RelatorioController;
 
@@ -34,4 +36,10 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/produtos/{id}/vender', [ProdutoController::class, 'vender'])
         ->name('produtos.vender');
+
+    Route::resource('despesas', DespesaController::class);
+
+    Route::get('/fechamento', [FechamentoController::class, 'index'])->name('fechamento.index');
+
+    Route::get('/fechamento/pdf', [FechamentoController::class, 'pdf'])->name('fechamento.pdf');
 });
