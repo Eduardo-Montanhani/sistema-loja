@@ -108,9 +108,13 @@ class ProdutoController extends Controller
 
         if ($produto->quantidade > 0) {
 
+            // diminui estoque
             $produto->quantidade -= 1;
 
-            // só marca como vendido se zerar o estoque (opcional)
+            // soma quantidade vendida
+            $produto->quantidade_vendida += 1;
+
+            // opcional: marcar vendido quando zerar
             if ($produto->quantidade == 0) {
                 $produto->vendido = true;
             }

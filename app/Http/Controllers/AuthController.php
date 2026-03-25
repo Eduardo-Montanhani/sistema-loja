@@ -38,12 +38,12 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        $produtos = Produto::latest()->take(5)->get(); // últimos produtos
+        $produtos = Produto::latest()->take(5)->get();
 
-        // 🔢 TOTAL DE PRODUTOS (quantidade total em estoque)
+        // 🔢 TOTAL DE PRODUTOS EM ESTOQUE
         $totalProdutos = Produto::sum('quantidade');
 
-        // 💰 VALOR TOTAL INVESTIDO (estoque)
+        // 💰 VALOR TOTAL INVESTIDO (estoque atual)
         $valorEstoque = Produto::all()->sum(function ($produto) {
             return $produto->preco_compra * $produto->quantidade;
         });
@@ -52,10 +52,10 @@ class AuthController extends Controller
         $despesas = Despesa::all();
         $totalDespesas = $despesas->sum('valor');
 
-        // 💵 LUCRO DAS VENDAS
+        // 💵 LUCRO DAS VENDAS (AGORA CORRETO)
         $lucroTotal = 0;
-        foreach (Produto::where('vendido', true)->get() as $produto) {
-            $lucroTotal += ($produto->preco_venda - $produto->preco_compra);
+        foreach (Produto::all() as $produto) {
+            $lucroTotal += ($produto->preco_venda - $produto->preco_compra) * $produto->quantidade_vendida;
         }
 
         // 🧾 LUCRO REAL

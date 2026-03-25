@@ -3,112 +3,174 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Produto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Produto - Sistema Loja</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-50 flex min-h-screen flex-col md:flex-row" x-data="{ open: false }">
 
-    <div class="min-h-screen flex">
+    <div class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center shadow-md">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-20">
+        <button @click="open = !open" class="p-2 text-2xl text-emerald-500 focus:outline-none">
+            <span x-show="!open">☰</span>
+            <span x-show="open">✕</span>
+        </button>
+    </div>
 
-        <!-- SIDEBAR -->
+    <aside
+        class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 text-white flex flex-col shadow-2xl transition-transform duration-300 transform md:relative md:translate-x-0"
+        :class="open ? 'translate-x-0' : '-translate-x-full'">
 
-        <div class="w-64 bg-gray-900 text-white p-6">
-
-            <h2 class="text-2xl font-bold mb-2">
-                <img src="{{ asset('images/logo.png') }}" class="w-50 mx-auto mb-2">
-            </h2>
-
-            <nav class="space-y-4">
-
-                <a href="/dashboard" class="block hover:text-blue-400">
-                    Dashboard
-                </a>
-
-                <a href="/produtos" class="block text-blue-400">
-                    Produtos
-                </a>
-
-                <form method="POST" action="/logout">
-                    @csrf
-                    <button class="text-red-400 hover:text-red-600">
-                        Sair
-                    </button>
-                </form>
-
-            </nav>
-
+        <div class="p-8 text-center border-b border-slate-800 hidden md:block">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32 mx-auto mb-4 drop-shadow-lg">
+            <p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Novo Item</p>
         </div>
 
-        <!-- CONTEÚDO -->
-
-        <div class="flex-1 p-10">
-
-            <h1 class="text-3xl font-bold mb-6">
-                Cadastrar Produto
-            </h1>
-
-            <a href="/produtos" class="text-blue-500 hover:underline mb-6 inline-block">
-                ← Voltar para Produtos
+        <nav class="flex-1 p-6 space-y-2 mt-4 md:mt-0">
+            <a href="/dashboard" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300">
+                <span>📊</span> <span class="font-medium">Dashboard</span>
             </a>
+            <a href="/produtos" class="flex items-center space-x-3 p-3 rounded-lg bg-emerald-600 text-white shadow-lg shadow-emerald-900/20">
+                <span>📦</span> <span class="font-medium">Produtos</span>
+            </a>
+            <a href="/relatorios" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300">
+                <span>📈</span> <span class="font-medium">Relatórios</span>
+            </a>
+            <a href="/despesas" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300">
+                <span>💸</span> <span class="font-medium">Despesas</span>
+            </a>
+        </nav>
 
-            <!-- FORMULÁRIO -->
+        <div class="p-6 border-t border-slate-800">
+            <form method="POST" action="/logout">
+                @csrf
+                <button class="flex items-center space-x-3 w-full p-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors font-semibold">
+                    <span>🚪</span> <span>Sair</span>
+                </button>
+            </form>
+        </div>
+    </aside>
 
-            <div class="bg-white p-8 rounded-lg shadow max-w-lg">
+    <div x-show="open" @click="open = false" class="fixed inset-0 bg-black/50 z-40 md:hidden" x-transition></div>
 
-                <form method="POST" action="/produtos" class="space-y-4">
+    <main class="flex-1 flex flex-col min-w-0">
 
-                    @csrf
+        <header class="bg-white border-b border-gray-200 p-6 md:p-8">
+            <div class="max-w-3xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-center md:text-left">
+                    <a href="/produtos" class="text-emerald-600 hover:text-emerald-800 text-xs font-black flex items-center justify-center md:justify-start gap-1 mb-2">
+                        <span>←</span> CANCELAR E VOLTAR
+                    </a>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
+                        Cadastrar Novo Produto
+                    </h1>
+                </div>
+                <div class="bg-emerald-100 text-emerald-700 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-200">
+                    Novo Registro
+                </div>
+            </div>
+        </header>
 
-                    <div>
-                        <label class="block text-gray-700">Nome do Produto</label>
-                        <input type="text"
-                            name="nome"
-                            class="w-full border rounded p-2 focus:ring focus:ring-blue-200"
-                            placeholder="Ex: Playstation 5">
-                    </div>
+        <div class="p-4 md:p-8 flex justify-center">
 
-                    <div>
-                        <label class="block text-gray-700">Preço de Compra</label>
-                        <input type="number"
-                            step="0.01"
-                            name="preco_compra"
-                            class="w-full border rounded p-2 focus:ring focus:ring-blue-200"
-                            placeholder="Ex: 2400">
-                    </div>
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-200 w-full max-w-2xl overflow-hidden transition-all hover:shadow-md">
 
-                    <div>
-                        <label class="block text-gray-700">Preço de Venda</label>
-                        <input type="number"
-                            step="0.01"
-                            name="preco_venda"
-                            class="w-full border rounded p-2 focus:ring focus:ring-blue-200"
-                            placeholder="Ex: 2900">
-                    </div>
+                <div class="p-6 md:p-10">
+                    <form method="POST" action="/produtos" class="space-y-6">
+                        @csrf
 
-                    <div>
-                        <label class="block text-gray-700">Quantidade</label>
-                        <input type="number"
-                            name="quantidade"
-                            class="w-full border rounded p-2 focus:ring focus:ring-blue-200"
-                            placeholder="Ex: 10">
-                    </div>
+                        <div class="group">
+                            <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest group-focus-within:text-emerald-600 transition-colors">
+                                Nome do Produto
+                            </label>
+                            <input
+                                type="text"
+                                name="nome"
+                                placeholder="Ex: Cadeira Gamer RGB"
+                                class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 focus:ring-0 focus:border-emerald-500 focus:bg-white outline-none transition-all font-medium text-gray-700"
+                                required>
+                        </div>
 
-                    <button
-                        class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="group">
+                                <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest group-focus-within:text-blue-500 transition-colors">
+                                    Preço de Compra (Custo)
+                                </label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-4 text-gray-400 font-bold italic">R$</span>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        name="preco_compra"
+                                        placeholder="0,00"
+                                        class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 pl-12 focus:border-blue-500 focus:bg-white outline-none transition-all font-bold text-gray-600"
+                                        required>
+                                </div>
+                            </div>
 
-                        Salvar Produto
+                            <div class="group">
+                                <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest group-focus-within:text-emerald-500 transition-colors">
+                                    Preço de Venda (Lucro)
+                                </label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-4 text-emerald-500 font-bold italic">R$</span>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        name="preco_venda"
+                                        placeholder="0,00"
+                                        class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 pl-12 focus:border-emerald-500 focus:bg-white outline-none transition-all font-bold text-emerald-700"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
 
-                    </button>
+                        <div class="max-w-xs group">
+                            <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest group-focus-within:text-emerald-600 transition-colors">
+                                Quantidade Inicial
+                            </label>
+                            <div class="flex items-center gap-3">
+                                <input
+                                    type="number"
+                                    name="quantidade"
+                                    placeholder="0"
+                                    class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 focus:border-emerald-500 focus:bg-white outline-none transition-all font-mono text-xl text-center"
+                                    required>
+                                <span class="text-xs font-bold text-gray-400 uppercase">Unid.</span>
+                            </div>
+                        </div>
 
-                </form>
+                        <div class="pt-8 border-t border-gray-50 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <button
+                                type="submit"
+                                class="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-black px-10 py-4 rounded-2xl shadow-xl shadow-emerald-100 transition-all active:scale-95 flex items-center justify-center gap-3">
+                                <span>➕</span> CADASTRAR PRODUTO
+                            </button>
+
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center md:text-left">
+                                Preencha todos os campos <br> para habilitar o registro.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-emerald-50/50 p-6 border-t border-emerald-100 flex items-center gap-4">
+                    <div class="bg-white p-2 rounded-lg shadow-sm">💡</div>
+                    <p class="text-[11px] text-emerald-700 font-medium leading-relaxed">
+                        **Dica:** O preço de venda deve ser superior ao preço de compra para que o sistema calcule seu lucro corretamente nos relatórios.
+                    </p>
+                </div>
 
             </div>
 
         </div>
-
-    </div>
+    </main>
 
 </body>
-
 </html>
