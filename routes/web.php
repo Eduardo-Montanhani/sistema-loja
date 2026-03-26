@@ -5,6 +5,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\FechamentoController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RelatorioController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,4 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/fechamento', [FechamentoController::class, 'index'])->name('fechamento.index');
 
     Route::get('/fechamento/pdf', [FechamentoController::class, 'pdf'])->name('fechamento.pdf');
+
+    Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 });

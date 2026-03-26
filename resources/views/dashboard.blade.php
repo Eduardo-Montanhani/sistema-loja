@@ -45,6 +45,9 @@
             <a href="/fechamento" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
                 📄 Fechamento Mensal
             </a>
+            <a href="/logs" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                📄 Log
+            </a>
         </nav>
 
         <div class="p-6 border-t border-slate-800">

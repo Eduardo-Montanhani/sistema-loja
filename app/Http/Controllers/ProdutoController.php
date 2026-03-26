@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -129,6 +130,13 @@ class ProdutoController extends Controller
             }
 
             $produto->save();
+
+            Log::create([
+                'user_id' => Auth::id(),
+                'tipo' => 'produto',
+                'acao' => 'VENDA',
+                'descricao' => 'Vendeu 1 unidade de: ' . $produto->nome
+            ]);
 
             return redirect()->back()->with('success', 'Produto vendido!');
         }
