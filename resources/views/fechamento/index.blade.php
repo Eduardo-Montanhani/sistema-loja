@@ -8,8 +8,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        @media print { .no-print { display: none; } }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -57,31 +64,46 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
+                <!-- VENDAS -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                     <div class="px-6 py-4 bg-emerald-50 border-b border-emerald-100 flex justify-between items-center">
                         <h2 class="text-lg font-bold text-emerald-800">💰 Vendas</h2>
                         <span class="text-xs font-black text-emerald-600 uppercase tracking-widest">Entradas</span>
                     </div>
+
                     <div class="p-6 space-y-3 max-h-96 overflow-y-auto">
                         @foreach($vendas as $v)
+                        @if($v->quantidade_vendida > 0)
                         <div class="flex justify-between items-center text-sm border-b border-gray-50 pb-2">
-                            <span class="text-gray-600">{{ $v->nome }}</span>
-                            <span class="font-bold text-gray-900">R$ {{ number_format($v->preco_venda,2,',','.') }}</span>
+
+                            <span class="text-gray-600">
+                                {{ $v->nome }} ({{ $v->quantidade_vendida }}x)
+                            </span>
+
+                            <span class="font-bold text-gray-900">
+                                R$ {{ number_format($v->preco_venda * $v->quantidade_vendida,2,',','.') }}
+                            </span>
+
                         </div>
+                        @endif
                         @endforeach
                     </div>
                 </div>
 
+                <!-- DESPESAS -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                     <div class="px-6 py-4 bg-red-50 border-b border-red-100 flex justify-between items-center">
                         <h2 class="text-lg font-bold text-red-800">💸 Despesas</h2>
                         <span class="text-xs font-black text-red-600 uppercase tracking-widest">Saídas</span>
                     </div>
+
                     <div class="p-6 space-y-3 max-h-96 overflow-y-auto">
                         @foreach($despesas as $d)
                         <div class="flex justify-between items-center text-sm border-b border-gray-50 pb-2">
                             <span class="text-gray-600">{{ $d->nome }}</span>
-                            <span class="font-bold text-red-600">- R$ {{ number_format($d->valor,2,',','.') }}</span>
+                            <span class="font-bold text-red-600">
+                                - R$ {{ number_format($d->valor,2,',','.') }}
+                            </span>
                         </div>
                         @endforeach
                     </div>
@@ -89,6 +111,7 @@
 
             </div>
 
+            <!-- RESUMO -->
             <div class="bg-slate-900 rounded-3xl p-8 shadow-2xl text-white relative overflow-hidden">
                 <div class="absolute right-0 top-0 p-8 opacity-10">
                     <span class="text-9xl">📊</span>
@@ -100,14 +123,19 @@
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
                     <div class="border-l border-slate-700 pl-6">
                         <p class="text-slate-400 text-sm font-medium uppercase tracking-widest">Total Vendas</p>
-                        <p class="text-2xl font-bold mt-1 text-emerald-400">R$ {{ number_format($totalVendas,2,',','.') }}</p>
+                        <p class="text-2xl font-bold mt-1 text-emerald-400">
+                            R$ {{ number_format($totalVendas,2,',','.') }}
+                        </p>
                     </div>
 
                     <div class="border-l border-slate-700 pl-6">
                         <p class="text-slate-400 text-sm font-medium uppercase tracking-widest">Total Despesas</p>
-                        <p class="text-2xl font-bold mt-1 text-red-400">R$ {{ number_format($totalDespesas,2,',','.') }}</p>
+                        <p class="text-2xl font-bold mt-1 text-red-400">
+                            R$ {{ number_format($totalDespesas,2,',','.') }}
+                        </p>
                     </div>
 
                     <div class="bg-white/10 rounded-2xl p-6 backdrop-blur-md">
@@ -116,6 +144,7 @@
                             R$ {{ number_format($lucro,2,',','.') }}
                         </p>
                     </div>
+
                 </div>
             </div>
 
@@ -127,4 +156,5 @@
     </main>
 
 </body>
+
 </html>

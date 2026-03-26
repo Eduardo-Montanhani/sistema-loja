@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class ProdutoController extends Controller
 {
@@ -58,8 +60,16 @@ class ProdutoController extends Controller
     /**
      * Mostrar formulário de edição
      */
-    public function edit($id)
+
+
+    public function edit(Request $request, $id)
     {
+        $senha = $request->header('X-MASTER-PASSWORD');
+
+        if (!$senha || !Hash::check($senha, Auth::user()->password)) {
+            return redirect()->back()->with('erro', 'Senha incorreta!');
+        }
+
         $produto = Produto::findOrFail($id);
 
         return view('produtos.edit', compact('produto'));
@@ -73,14 +83,14 @@ class ProdutoController extends Controller
             'nome' => 'required|string|max:255',
             'preco_compra' => 'required|numeric|min:0',
             'preco_venda' => 'required|numeric|min:0',
-            'quantidade' => 'required|integer|min:0',
+            // ❌ removido quantidade da validação
         ]);
 
         $produto->update([
             'nome' => $request->nome,
             'preco_compra' => $request->preco_compra,
             'preco_venda' => $request->preco_venda,
-            'quantidade' => $request->quantidade,
+            // ❌ não atualiza quantidade
         ]);
 
         return redirect()->route('produtos.index')
@@ -90,13 +100,12 @@ class ProdutoController extends Controller
     /**
      * Deletar produto
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Produto $produto)
     {
-        if ($request->master_password !== env('MASTER_PASSWORD')) {
-            return redirect()->back()->with('error', 'Senha mestre incorreta!');
+        if (!Hash::check($request->master_password, Auth::user()->password)) {
+            return redirect()->back()->with('error', 'Senha incorreta!');
         }
 
-        $produto = Produto::findOrFail($id);
         $produto->delete();
 
         return redirect()->back()->with('success', 'Produto excluído!');

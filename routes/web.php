@@ -7,8 +7,7 @@ use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\FechamentoController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RelatorioController;
-
-
+use Symfony\Component\HttpFoundation\Request;
 
 Route::get('/', function () {
     return redirect('/login');

@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -136,12 +138,8 @@
                             <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest transition-colors group-focus-within:text-indigo-600">
                                 Quantidade em Estoque
                             </label>
-                            <input
-                                type="number"
-                                name="quantidade"
-                                value="{{ $produto->quantidade }}"
-                                class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 focus:border-indigo-500 focus:bg-white outline-none transition-all font-mono text-xl text-center"
-                                required>
+                            <input type="number" name="quantidade" value="{{ $produto->quantidade }}" readonly
+                                class="bg-gray-100 cursor-not-allowed">
                         </div>
 
                         <div class="pt-6 border-t border-gray-50 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -169,4 +167,5 @@
     </main>
 
 </body>
+
 </html>

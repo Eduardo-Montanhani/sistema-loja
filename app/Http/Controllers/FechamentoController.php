@@ -12,11 +12,20 @@ class FechamentoController extends Controller
 {
     public function index()
     {
-        $vendas = Produto::where('vendido', true)->get();
+        $produtos = Produto::all();
         $despesas = Despesa::all();
 
-        $totalVendas = $vendas->sum('preco_venda');
+        // pegar só quem vendeu algo
+        $vendas = $produtos->where('quantidade_vendida', '>', 0);
+
+        $totalVendas = 0;
+
+        foreach ($vendas as $p) {
+            $totalVendas += $p->preco_venda * $p->quantidade_vendida;
+        }
+
         $totalDespesas = $despesas->sum('valor');
+
         $lucro = $totalVendas - $totalDespesas;
 
         return view('fechamento.index', compact(
@@ -27,14 +36,21 @@ class FechamentoController extends Controller
             'lucro'
         ));
     }
-
     public function pdf()
     {
-        $vendas = Produto::where('vendido', true)->get();
+        $produtos = Produto::all();
         $despesas = Despesa::all();
 
-        $totalVendas = $vendas->sum('preco_venda');
+        $vendas = $produtos->where('quantidade_vendida', '>', 0);
+
+        $totalVendas = 0;
+
+        foreach ($vendas as $p) {
+            $totalVendas += $p->preco_venda * $p->quantidade_vendida;
+        }
+
         $totalDespesas = $despesas->sum('valor');
+
         $lucro = $totalVendas - $totalDespesas;
 
         $pdf = Pdf::loadView('fechamento.pdf', compact(

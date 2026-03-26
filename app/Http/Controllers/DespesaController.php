@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Despesa;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class DespesaController extends Controller
 {
@@ -28,11 +28,13 @@ class DespesaController extends Controller
         return redirect()->route('despesas.index');
     }
 
+
+
     public function destroy(Request $request, $id)
     {
-        // 🔐 senha mestre
-        if ($request->master_password !== env('MASTER_PASSWORD')) {
-            return redirect()->back()->with('erro', 'Senha mestre incorreta!');
+        // 🔐 valida senha do usuário logado
+        if (!Hash::check($request->master_password, Auth::user()->password)) {
+            return redirect()->back()->with('erro', 'Senha incorreta!');
         }
 
         $despesa = Despesa::findOrFail($id);
