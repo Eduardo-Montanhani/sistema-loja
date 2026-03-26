@@ -64,6 +64,7 @@
                         type="password"
                         name="password_confirmation"
                         placeholder="••••••••"
+                         maxlength=6
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all duration-200 bg-gray-50 focus:bg-white"
                         required />
                 </div>

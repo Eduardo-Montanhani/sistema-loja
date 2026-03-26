@@ -79,6 +79,7 @@
                     type="password"
                     name="password"
                     placeholder="••••••••"
+                    maxlength=6
                     class="w-full px-5 py-4 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-300 bg-slate-50/50 focus:bg-white text-slate-700"
                     required />
             </div>
