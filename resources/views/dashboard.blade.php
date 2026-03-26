@@ -62,6 +62,21 @@
     </aside>
 
     <main class="flex-1 flex flex-col">
+        @if(session('erro'))
+        <div id="modalErro" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-2xl p-8 shadow-xl text-center max-w-sm w-full">
+                <h2 class="text-xl font-bold text-red-600 mb-4">🚫 Acesso negado</h2>
+                <p class="text-gray-600 mb-6">
+                    Você não tem permissão para acessar esta página.
+                </p>
+
+                <button onclick="document.getElementById('modalErro').remove()"
+                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-bold">
+                    Fechar
+                </button>
+            </div>
+        </div>
+        @endif
 
         <header class="bg-white border-b border-gray-200 p-8">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
