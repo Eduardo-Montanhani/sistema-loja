@@ -8,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -27,6 +29,15 @@
             <p class="text-gray-500 mt-3">Registre uma saída de caixa do sistema</p>
         </div>
 
+        @if ($errors->any())
+        <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded mb-4">
+            <ul class="text-sm">
+                @foreach ($errors->all() as $error)
+                <li>⚠️ {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <form method="POST" action="{{ route('despesas.store') }}" class="space-y-5">
             @csrf
 
@@ -60,10 +71,11 @@
                     type="date"
                     name="data"
                     class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all duration-200 bg-gray-50 focus:bg-white text-gray-600"
+                    max="{{ date('Y-m-d') }}
                     required />
             </div>
 
-            <div class="pt-2">
+            <div class=" pt-2">
                 <button class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-amber-200 transform transition-all active:scale-95 duration-200 flex items-center justify-center gap-2">
                     <span>💾</span> Salvar Despesa
                 </button>
@@ -78,4 +90,5 @@
     </div>
 
 </body>
+
 </html>
