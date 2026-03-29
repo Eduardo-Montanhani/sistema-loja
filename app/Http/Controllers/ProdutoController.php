@@ -36,9 +36,9 @@ class ProdutoController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
-            'preco_compra' => 'required|numeric|min:0',
-            'preco_venda' => 'required|numeric|min:0',
-            'quantidade' => 'required|integer|min:0',
+            'preco_compra' => 'required|numeric|min:1',
+            'preco_venda' => 'required|numeric|min:1',
+            'quantidade' => 'required|integer|min:1',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:100000'
         ]);
 
@@ -91,8 +91,8 @@ class ProdutoController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
-            'preco_compra' => 'required|numeric|min:0',
-            'preco_venda' => 'required|numeric|min:0',
+            'preco_compra' => 'required|numeric|min:1',
+            'preco_venda' => 'required|numeric|min:1',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:100000'
         ]);
 

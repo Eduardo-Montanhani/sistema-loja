@@ -26,7 +26,7 @@ class DespesaController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
-            'valor' => 'required|numeric|min:0',
+            'valor' => 'required|numeric|min:1',
             'data' => 'required|date',
         ]);
 
