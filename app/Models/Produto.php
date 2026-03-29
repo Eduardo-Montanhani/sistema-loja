@@ -11,6 +11,6 @@ class Produto extends Model
         'preco_compra',
         'preco_venda',
         'quantidade',
-        'vendido'
+        'imagem'
     ];
 }

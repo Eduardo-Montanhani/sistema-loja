@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -82,7 +84,7 @@
             <div class="bg-white rounded-3xl shadow-sm border border-gray-200 w-full max-w-2xl overflow-hidden transition-all hover:shadow-md">
 
                 <div class="p-6 md:p-10">
-                    <form method="POST" action="/produtos" class="space-y-6">
+                    <form method="POST" action="/produtos" class="space-y-6" enctype="multipart/form-data">
                         @csrf
 
                         <div class="group">
@@ -145,6 +147,44 @@
                                 <span class="text-xs font-bold text-gray-400 uppercase">Unid.</span>
                             </div>
                         </div>
+                        <div class="group">
+                            <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest group-focus-within:text-emerald-600 transition-colors">
+                                Foto do Produto
+                            </label>
+                            <div class="relative">
+                                <label for="imagem" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 transition-all cursor-pointer group/file">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <span class="text-2xl mb-2 group-hover/file:scale-110 transition-transform">📸</span>
+                                        <p class="text-xs text-gray-500 font-medium">
+                                            <span class="font-bold text-emerald-600">Clique para enviar</span> ou arraste a imagem
+                                        </p>
+                                        <p class="text-[10px] text-gray-400 uppercase mt-1">PNG, JPG ou WEBP (Máx. 2MB)</p>
+                                    </div>
+                                    <input
+                                        id="imagem"
+                                        type="file"
+                                        name="imagem"
+                                        class="hidden"
+                                        accept="image/*"
+                                        onchange="updateFileName(this)" />
+                                </label>
+                                <div id="file-name-badge" class="hidden absolute -bottom-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg uppercase tracking-tighter">
+                                    Imagem Selecionada
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function updateFileName(input) {
+                                const badge = document.getElementById('file-name-badge');
+                                if (input.files && input.files.length > 0) {
+                                    badge.classList.remove('hidden');
+                                    badge.innerText = "✓ " + input.files[0].name;
+                                } else {
+                                    badge.classList.add('hidden');
+                                }
+                            }
+                        </script>
 
                         <div class="pt-8 border-t border-gray-50 flex flex-col md:flex-row items-center justify-between gap-6">
                             <button
@@ -173,4 +213,5 @@
     </main>
 
 </body>
+
 </html>

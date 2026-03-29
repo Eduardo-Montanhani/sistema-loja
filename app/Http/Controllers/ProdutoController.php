@@ -7,6 +7,7 @@ use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -30,6 +31,7 @@ class ProdutoController extends Controller
     /**
      * Salvar produto no banco
      */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -37,19 +39,26 @@ class ProdutoController extends Controller
             'preco_compra' => 'required|numeric|min:0',
             'preco_venda' => 'required|numeric|min:0',
             'quantidade' => 'required|integer|min:0',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:100000'
         ]);
+
+        $imagemPath = null;
+
+        if ($request->hasFile('imagem')) {
+            $imagemPath = $request->file('imagem')->store('produtos', 'public');
+        }
 
         Produto::create([
             'nome' => $request->nome,
             'preco_compra' => $request->preco_compra,
             'preco_venda' => $request->preco_venda,
             'quantidade' => $request->quantidade,
+            'imagem' => $imagemPath
         ]);
 
         return redirect()->route('produtos.index')
             ->with('success', 'Produto cadastrado com sucesso!');
     }
-
     /**
      * Mostrar um produto
      */
@@ -84,15 +93,26 @@ class ProdutoController extends Controller
             'nome' => 'required|string|max:255',
             'preco_compra' => 'required|numeric|min:0',
             'preco_venda' => 'required|numeric|min:0',
-            // ❌ removido quantidade da validação
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:100000'
         ]);
 
-        $produto->update([
+        $dados = [
             'nome' => $request->nome,
             'preco_compra' => $request->preco_compra,
             'preco_venda' => $request->preco_venda,
-            // ❌ não atualiza quantidade
-        ]);
+        ];
+
+        if ($request->hasFile('imagem')) {
+
+            // remove antiga (se existir)
+            if ($produto->imagem) {
+                Storage::disk('public')->delete($produto->imagem);
+            }
+
+            $dados['imagem'] = $request->file('imagem')->store('produtos', 'public');
+        }
+
+        $produto->update($dados);
 
         return redirect()->route('produtos.index')
             ->with('success', 'Produto atualizado com sucesso!');
