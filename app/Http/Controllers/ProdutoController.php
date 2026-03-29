@@ -143,4 +143,11 @@ class ProdutoController extends Controller
 
         return redirect()->back()->with('error', 'Sem estoque!');
     }
+
+    public function loja()
+    {
+        $produtos = Produto::all();
+
+        return view('loja.index', compact('produtos'));
+    }
 }

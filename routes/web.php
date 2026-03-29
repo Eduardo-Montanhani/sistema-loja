@@ -45,3 +45,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 });
+
+Route::get('/loja', [ProdutoController::class, 'loja'])->name('loja.index');
