@@ -164,10 +164,14 @@ class ProdutoController extends Controller
         return redirect()->back()->with('error', 'Sem estoque!');
     }
 
-    public function loja()
-    {
-        $produtos = Produto::all();
+    public function loja(Request $request)
+{
+    $busca = $request->input('busca');
 
-        return view('loja.index', compact('produtos'));
-    }
+    $produtos = Produto::when($busca, function ($query, $busca) {
+        return $query->where('nome', 'like', '%' . $busca . '%');
+    })->get();
+
+    return view('loja.index', compact('produtos', 'busca'));
+}
 }
