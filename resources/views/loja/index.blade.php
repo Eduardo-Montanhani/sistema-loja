@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Degradê de Malha estilo Apple (Mesh Gradient) */
         .mesh-gradient {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -33,7 +32,6 @@
             background-attachment: fixed;
         }
 
-        /* Animação suave de flutuação para o fundo */
         .mesh-sphere {
             position: fixed;
             width: 60vw; height: 60vw;
@@ -72,14 +70,12 @@
             transform: scale(1.08);
         }
 
-        /* Efeito de brilho no texto estilo Apple */
         .apple-text-gradient {
             background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.5) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
@@ -139,11 +135,11 @@
             </form>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach($produtos as $produto)
             <div class="glass rounded-[2rem] overflow-hidden flex flex-col group" data-aos="fade-up">
 
-                <div class="relative overflow-hidden h-80 bg-[#0a0a0a]">
+                <div class="relative overflow-hidden h-64 bg-[#0a0a0a]">
                     @if($produto->imagem)
                         <img src="{{ asset('storage/' . $produto->imagem) }}"
                              alt="{{ $produto->nome }}"
@@ -152,25 +148,25 @@
                         <div class="w-full h-full flex items-center justify-center text-4xl opacity-20">📦</div>
                     @endif
 
-                    <div class="absolute top-6 left-6">
+                    <div class="absolute top-4 left-4">
                         @if($produto->quantidade > 0)
                             <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full">
-                                <span class="text-[10px] font-bold text-white/90 uppercase tracking-tighter">Disponível</span>
+                                <span class="text-[9px] font-bold text-white/90 uppercase tracking-tighter">Disponível</span>
                             </div>
                         @endif
                     </div>
                 </div>
 
-                <div class="p-8">
-                    <h2 class="text-2xl font-semibold text-white/90 mb-1 group-hover:text-white transition-colors line-clamp-1 tracking-tight">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-white/90 mb-1 group-hover:text-white transition-colors line-clamp-1 tracking-tight">
                         {{ $produto->nome }}
                     </h2>
-                    <p class="text-gray-500 text-xs uppercase tracking-widest font-bold mb-6">Original Series</p>
+                    <p class="text-gray-500 text-[10px] uppercase tracking-widest font-bold mb-4">Original Series</p>
 
                     <div class="flex items-center justify-between mt-auto">
                         <div class="flex flex-col">
-                            <p class="text-3xl font-bold text-white">
-                                <span class="text-sm font-normal text-gray-500 mr-0.5">R$</span>{{ number_format($produto->preco_venda,2,',','.') }}
+                            <p class="text-2xl font-bold text-white">
+                                <span class="text-xs font-normal text-gray-500 mr-0.5">R$</span>{{ number_format($produto->preco_venda,2,',','.') }}
                             </p>
                         </div>
 
@@ -180,23 +176,23 @@
                             @endphp
                             <a href="https://wa.me/5511999999999?text={{ $mensagem }}"
                                 target="_blank"
-                                class="bg-emerald-500 hover:bg-emerald-400 text-black w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg shadow-emerald-500/20 active:scale-90">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                class="bg-emerald-500 hover:bg-emerald-400 text-black w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg shadow-emerald-500/20 active:scale-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                                 </svg>
                             </a>
                         @endif
                     </div>
 
-                    <div class="mt-8">
+                    <div class="mt-6">
                         @if($produto->quantidade > 0)
                         <a href="https://wa.me/5511999999999?text={{ $mensagem }}"
                             target="_blank"
-                            class="block w-full text-center bg-white hover:bg-gray-200 text-black py-4 rounded-xl text-sm font-bold transition-all active:scale-95">
+                            class="block w-full text-center bg-white hover:bg-gray-200 text-black py-3 rounded-xl text-xs font-bold transition-all active:scale-95">
                             Comprar Agora
                         </a>
                         @else
-                        <button disabled class="w-full bg-white/5 border border-white/10 py-4 rounded-xl text-sm font-bold text-gray-600 cursor-not-allowed">
+                        <button disabled class="w-full bg-white/5 border border-white/10 py-3 rounded-xl text-xs font-bold text-gray-600 cursor-not-allowed">
                             Indisponível
                         </button>
                         @endif
